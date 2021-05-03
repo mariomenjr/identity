@@ -1,0 +1,18 @@
+version: "3.1"
+services:
+    identity:
+        container_name: identity
+        image: identity:1.0.0-rc
+        build:
+            context: ./../
+            args:
+                - UNAME=${IMG_USER}
+                - UID=${IMG_UID}
+                - GID=${IMG_GID}
+            dockerfile: docker/${DOCKERFILE}
+        environment:
+            - PORT=${PORT}
+        ports:
+            - ${PORT}:80
+        volumes:            
+            - ./../:/source
