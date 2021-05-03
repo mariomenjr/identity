@@ -13,7 +13,7 @@ then
 else
     if [ $USR_ENV = "production" ]
     then
-        export PORT=82
+        export PORT=84
         export DOCKERFILE=Dockerfile
 
         COMPOSE=true
