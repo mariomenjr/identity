@@ -7,7 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
+using IdentityServer4;
+using IdentityServer4.Models;
 namespace Identity
 {
     public class Startup
@@ -21,7 +22,7 @@ namespace Identity
                 .AddInMemoryIdentityResources(new List<IdentityResource>())
                 .AddInMemoryApiResources(new List<ApiResource>())
                 .AddInMemoryApiScopes(new List<ApiScope>())
-                .AddTestUsers(new List<TestUser>())
+                // .AddTestUsers(new List<TestUser>())
                 .AddDeveloperSigningCredential();
         }
 
