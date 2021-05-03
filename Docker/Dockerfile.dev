@@ -1,24 +1,17 @@
 # https://hub.docker.com/_/microsoft-dotnet
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
-
 WORKDIR /source
-RUN mkdir ./identity
-
-WORKDIR /source/identity
 
 # copy csproj and restore as distinct layers
 COPY *.sln .
-COPY *.csproj .
-
+COPY Identity/*.csproj ./Identity/
 RUN dotnet restore
 
 # copy everything else and build app
-COPY . .
+COPY Identity/. ./Identity/
+WORKDIR /source/Identity
 
-WORKDIR /source/identity
-RUN dotnet publish -c debug -o /app --no-restore
-
-
+RUN dotnet publish -c debug -o /app
 
 # final stage/image
 FROM mcr.microsoft.com/dotnet/aspnet:5.0

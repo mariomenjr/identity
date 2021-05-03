@@ -5,11 +5,7 @@ services:
         image: identity:1.0.0-rc
         build:
             context: ./../
-            args:
-                - UNAME=${IMG_USER}
-                - UID=${IMG_UID}
-                - GID=${IMG_GID}
-            dockerfile: docker/${DOCKERFILE}
+            dockerfile: Docker/${DOCKERFILE}
         environment:
             - PORT=${PORT}
         ports:
