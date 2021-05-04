@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using IdentityServer4;
 using IdentityServer4.Models;
+
 namespace Identity
 {
     public class Startup
@@ -18,10 +19,10 @@ namespace Identity
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddIdentityServer()
-                .AddInMemoryClients(new List<Client>())
-                .AddInMemoryIdentityResources(new List<IdentityResource>())
-                .AddInMemoryApiResources(new List<ApiResource>())
-                .AddInMemoryApiScopes(new List<ApiScope>())
+                .AddInMemoryApiScopes(Config.ApiScopes)
+                .AddInMemoryClients(Config.Clients)
+                // .AddInMemoryIdentityResources(new List<IdentityResource>())
+                // .AddInMemoryApiResources(new List<ApiResource>())
                 // .AddTestUsers(new List<TestUser>())
                 .AddDeveloperSigningCredential();
         }
@@ -41,7 +42,7 @@ namespace Identity
             {
                 endpoints.MapGet("/", async context =>
                 {
-                    await context.Response.WriteAsync("Hello World!");
+                    await context.Response.WriteAsync(DateTimeOffset.Now.ToString());
                 });
             });
         }
