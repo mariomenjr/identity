@@ -1,19 +1,22 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using IdentityServer4;
-using IdentityServer4.Models;
+using System.Reflection;
+using System.Diagnostics;
 
 namespace Identity
 {
     public class Startup
     {
+        private FileVersionInfo About { get; }
+        public Startup()
+        {
+            this.About = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location);
+        }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
@@ -42,7 +45,19 @@ namespace Identity
             {
                 endpoints.MapGet("/", async context =>
                 {
-                    await context.Response.WriteAsync(DateTimeOffset.Now.ToString());
+                    string repoUrl = "https://github.com/mariomenjr/identity";
+                    await context.Response.WriteAsync(
+                        "<html><body>" + 
+                        string.Join(
+                            "<br />",
+                            new string[]
+                            {
+                                $"{this.About.ProductName}/{this.About.FileVersion} @ {DateTimeOffset.Now.ToString()}",
+                                $"Repo: <a href=\"{repoUrl}\">{repoUrl}</a>",
+                            }
+                        ) + 
+                        "</body></html>"
+                    );
                 });
             });
         }

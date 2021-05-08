@@ -2,6 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <AssemblyVersion>0.0.0.1</AssemblyVersion>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <Authors>Mario Menjivar</Authors>
+    <Description>Identity Server 4 instance for the different projects hosted under any subdomain at mariomenjr.com/</Description>
+    <PackageProjectUrl>https://identity.mariomenjr.com/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/mariomenjr/identity</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
