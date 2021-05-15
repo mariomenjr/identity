@@ -1,5 +1,6 @@
 using IdentityServer4.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using IdentityModel;
 using IdentityServer4.Test;
@@ -26,7 +27,7 @@ namespace Identity
                     {
                         SubjectId = "12345",
                         Username =  "mariomenjr",
-                        Password = "password",
+                        Password = "ThisIsATest",
                         Claims =
                         {
                             new Claim(JwtClaimTypes.Name, "Mario Menjivar"),
@@ -45,7 +46,7 @@ namespace Identity
             new IdentityResource()
             {
                 Name = "role",
-                UserClaims = new List<string> {"role"}
+                UserClaims = new List<string> { "role" }
             }
         };
 
@@ -59,8 +60,8 @@ namespace Identity
         {
             new ApiResource(name: "continuee_api")
             {
-                Scopes = new List<string> {"continuee.chain.read", "continuee.chain.write"},
-                ApiSecrets = new List<Secret> {new Secret("ContinueeApiSecret".Sha256())},
+                Scopes = ApiScopes.Select(s => s.Name).ToList(),
+                ApiSecrets = new List<Secret> {new Secret("ContinueeSecret".Sha256())},
                 UserClaims = new List<string> {"role"}
             }
         };
@@ -71,6 +72,7 @@ namespace Identity
                 new Client
                 {
                     ClientId = "continuee.server",
+                    AccessTokenType = AccessTokenType.Jwt,
 
                     // no interactive user, use the clientid/secret for authentication
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
@@ -82,7 +84,7 @@ namespace Identity
                     },
 
                     // scopes that client has access to
-                    AllowedScopes = { "continuee.chain.read", "continuee.chain.write" }
+                    AllowedScopes = ApiScopes.Select(s => s.Name).ToList(),
                 }
             };
     }
