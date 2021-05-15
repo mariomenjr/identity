@@ -15,7 +15,7 @@ namespace Identity
     {
         public static void Main(string[] args)
         {
-            Env.LoadVariables(Path.Combine(Directory.GetCurrentDirectory(), "../.env"));
+            Env.LoadVariables(Path.Combine(Directory.GetCurrentDirectory(), ".env"));
             
             CreateHostBuilder(args).Build().Run();
         }
