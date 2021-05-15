@@ -1,3 +1,4 @@
+using System;
 using IdentityServer4.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,10 +59,10 @@ namespace Identity
 
         public static IEnumerable<ApiResource> ApiResources() => new List<ApiResource>
         {
-            new ApiResource(name: "continuee_api")
+            new ApiResource(name: Environment.GetEnvironmentVariable("CONTINUEE__API_RESOURCE_NAME"))
             {
                 Scopes = ApiScopes.Select(s => s.Name).ToList(),
-                ApiSecrets = new List<Secret> {new Secret("ContinueeSecret".Sha256())},
+                ApiSecrets = new List<Secret> {new(Environment.GetEnvironmentVariable("CONTINUEE__API_RESOURCE_SECRET").Sha256())},
                 UserClaims = new List<string> {"role"}
             }
         };
@@ -71,7 +72,7 @@ namespace Identity
             {
                 new Client
                 {
-                    ClientId = "continuee.server",
+                    ClientId = Environment.GetEnvironmentVariable("CONTINUEE__CLIENT_ID"),
                     AccessTokenType = AccessTokenType.Jwt,
 
                     // no interactive user, use the clientid/secret for authentication
@@ -80,7 +81,7 @@ namespace Identity
                     // secret for authentication
                     ClientSecrets =
                     {
-                        new Secret("ContinueeSecret".Sha256())
+                        new Secret(Environment.GetEnvironmentVariable("CONTINUEE__CLIENT_SECRET").Sha256())
                     },
 
                     // scopes that client has access to

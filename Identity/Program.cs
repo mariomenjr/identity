@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Identity.Utils;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -13,6 +15,8 @@ namespace Identity
     {
         public static void Main(string[] args)
         {
+            Env.LoadVariables(Path.Combine(Directory.GetCurrentDirectory(), "../.env"));
+            
             CreateHostBuilder(args).Build().Run();
         }
 

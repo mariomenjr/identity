@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Reflection;
 using System.Diagnostics;
+using Identity.Utils;
 
 namespace Identity
 {
