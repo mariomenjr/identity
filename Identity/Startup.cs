@@ -7,6 +7,10 @@ using Microsoft.Extensions.Hosting;
 using System.Reflection;
 using System.Diagnostics;
 using Identity.DAL.Mongo.Settings;
+using Identity.DAL.Repository.Managers;
+using Identity.DAL.Repository.Services;
+using Identity.Stores;
+using IdentityServer4.Stores;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 
@@ -14,8 +18,8 @@ namespace Identity
 {
     public class Startup
     {
-        public FileVersionInfo About { get; }
-        public IConfiguration Configuration { get; set; }
+        private FileVersionInfo About { get; }
+        private IConfiguration Configuration { get; }
         
         public Startup(IConfiguration configuration)
         {
@@ -30,15 +34,19 @@ namespace Identity
             services.AddSingleton<IMongoSettings>(srvProvider =>
                 srvProvider.GetRequiredService<IOptions<MongoSettings>>().Value);
             
+            services.AddTransient<IClientService, ClientManager>();
+            
             var builder = services.AddIdentityServer();
 
             builder
-                .AddInMemoryClients(Config.Clients)
+                // .AddInMemoryClients(Config.Clients)
                 .AddInMemoryIdentityResources(Config.IdentityResources)
                 .AddInMemoryApiResources(Config.ApiResources())
                 .AddInMemoryApiScopes(Config.ApiScopes)
                 .AddTestUsers(Config.Users)
                 .AddDeveloperSigningCredential();
+            
+            builder.Services.AddTransient<IClientStore, ClientStore>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
