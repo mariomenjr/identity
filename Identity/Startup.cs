@@ -6,21 +6,33 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Reflection;
 using System.Diagnostics;
-using Identity.Utils;
+using Identity.DAL.Mongo.Settings;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace Identity
 {
     public class Startup
     {
-        private FileVersionInfo About { get; }
-        public Startup()
+        public FileVersionInfo About { get; }
+        public IConfiguration Configuration { get; set; }
+        
+        public Startup(IConfiguration configuration)
         {
             this.About = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location);
+            this.Configuration = configuration;
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddIdentityServer()
+            services.Configure<MongoSettings>(Configuration.GetSection("MongoSettings"));
+            
+            services.AddSingleton<IMongoSettings>(srvProvider =>
+                srvProvider.GetRequiredService<IOptions<MongoSettings>>().Value);
+            
+            var builder = services.AddIdentityServer();
+
+            builder
                 .AddInMemoryClients(Config.Clients)
                 .AddInMemoryIdentityResources(Config.IdentityResources)
                 .AddInMemoryApiResources(Config.ApiResources())
