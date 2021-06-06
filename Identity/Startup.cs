@@ -46,7 +46,7 @@ namespace Identity
                 // .AddInMemoryIdentityResources(Config.IdentityResources)
                 // .AddInMemoryApiResources(Config.ApiResources())
                 // .AddInMemoryApiScopes(Config.ApiScopes)
-                .AddTestUsers(Config.Users)
+                // .AddTestUsers(Config.Users)
                 .AddDeveloperSigningCredential();
             
             builder.Services.AddTransient<IClientStore, ClientStore>();

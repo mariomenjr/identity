@@ -10,10 +10,12 @@ namespace Identity.Stores
     public class ClientStore : IClientStore
     {
         private readonly IClientService _clientService;
+        private readonly IApiScopeService _apiScopeService;
         
-        public ClientStore(IClientService clientService)
+        public ClientStore(IClientService clientService, IApiScopeService apiScopeService)
         {
             this._clientService = clientService;
+            this._apiScopeService = apiScopeService;
         }
         
         public async Task<Client> FindClientByIdAsync(string clientId)
@@ -36,7 +38,7 @@ namespace Identity.Stores
                     },
 
                     // scopes that client has access to
-                    AllowedScopes = Config.ApiScopes.Select(s => s.Name).ToList(),
+                    AllowedScopes = this._apiScopeService.Find().Select(s => s.Name).ToList(), // TODO: Create FindScopesByClient
                 };
             }
             return null;
