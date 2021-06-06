@@ -7,6 +7,7 @@ using Identity.DAL.Mongo.Settings;
 using Identity.Entities.Mongo;
 using Identity.Entities.Utils.Attributes;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
 
 namespace Identity.DAL.Mongo.Repository
@@ -17,8 +18,9 @@ namespace Identity.DAL.Mongo.Repository
 
         public MongoRepository(IMongoSettings settings)
         {
-            var client = new MongoClient(settings.ConnectionString);
+            ConventionRegistry.Register("camelCase", new ConventionPack {new CamelCaseElementNameConvention()}, t => true);
             
+            var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
             
             var collectionName = this.GetCollectionName(typeof(TDocument));
