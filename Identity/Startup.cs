@@ -35,18 +35,22 @@ namespace Identity
                 srvProvider.GetRequiredService<IOptions<MongoSettings>>().Value);
             
             services.AddTransient<IClientService, ClientManager>();
+            services.AddTransient<IIdentityResourceService, IdentityResourceManager>();
+            services.AddTransient<IApiScopeService, ApiScopeManager>();
+            services.AddTransient<IApiResourceService, ApiResourceManager>();
             
             var builder = services.AddIdentityServer();
 
             builder
                 // .AddInMemoryClients(Config.Clients)
-                .AddInMemoryIdentityResources(Config.IdentityResources)
-                .AddInMemoryApiResources(Config.ApiResources())
-                .AddInMemoryApiScopes(Config.ApiScopes)
+                // .AddInMemoryIdentityResources(Config.IdentityResources)
+                // .AddInMemoryApiResources(Config.ApiResources())
+                // .AddInMemoryApiScopes(Config.ApiScopes)
                 .AddTestUsers(Config.Users)
                 .AddDeveloperSigningCredential();
             
             builder.Services.AddTransient<IClientStore, ClientStore>();
+            builder.Services.AddTransient<IResourceStore, ResourceStore>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
