@@ -6,13 +6,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Reflection;
 using System.Diagnostics;
-using Identity.DAL.Mongo.Settings;
-using Identity.DAL.Repository.Managers;
-using Identity.DAL.Repository.Services;
+using Identity.DAL.Mongo.Extensions;
 using Identity.Stores;
 using IdentityServer4.Stores;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 
 namespace Identity
 {
@@ -29,25 +26,11 @@ namespace Identity
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<MongoSettings>(Configuration.GetSection("MongoSettings"));
-            
-            services.AddSingleton<IMongoSettings>(srvProvider =>
-                srvProvider.GetRequiredService<IOptions<MongoSettings>>().Value);
-            
-            services.AddTransient<IClientService, ClientManager>();
-            services.AddTransient<IIdentityResourceService, IdentityResourceManager>();
-            services.AddTransient<IApiScopeService, ApiScopeManager>();
-            services.AddTransient<IApiResourceService, ApiResourceManager>();
+            services.AddMongoDb(Configuration.GetSection("MongoSettings"));
             
             var builder = services.AddIdentityServer();
 
-            builder
-                // .AddInMemoryClients(Config.Clients)
-                // .AddInMemoryIdentityResources(Config.IdentityResources)
-                // .AddInMemoryApiResources(Config.ApiResources())
-                // .AddInMemoryApiScopes(Config.ApiScopes)
-                // .AddTestUsers(Config.Users)
-                .AddDeveloperSigningCredential();
+            builder.AddDeveloperSigningCredential();
             
             builder.Services.AddTransient<IClientStore, ClientStore>();
             builder.Services.AddTransient<IResourceStore, ResourceStore>();
