@@ -25,8 +25,8 @@ else
         COMPOSE=true
     fi
 
-    if [ -f Identity/.env ]
-    then
+    # if [ -f Identity/.env ]
+    # then
         echo "Preparing docker-compose file..."
 
         if [ $COMPOSE = true ]
@@ -36,9 +36,9 @@ else
         else
             echo ">> Provided environment not supported"
         fi
-    else
-        echo ">> You need to create an .env file (even if it's empty"
-    fi
+    # else
+    #    echo ">> You need to create an .env file (even if it's empty"
+    # fi
 fi
 
 # echo $MY_ENV
