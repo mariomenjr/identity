@@ -2,12 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <AssemblyVersion>0.0.0.1</AssemblyVersion>
+    <AssemblyVersion>0.0.0.2</AssemblyVersion>
     <NeutralLanguage>en-US</NeutralLanguage>
     <Authors>Mario Menjivar</Authors>
-    <Description>Identity Server 4 instance for the different projects hosted under any subdomain at mariomenjr.com/</Description>
+    <Description>dentity Server 4 using MongoDB for Stores.</Description>
     <PackageProjectUrl>https://identity.mariomenjr.com/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/mariomenjr/identity</RepositoryUrl>
+    <IsPackable>true</IsPackable>
+    <PackageVersion>0.0.0.2</PackageVersion>
   </PropertyGroup>
 
   <ItemGroup>

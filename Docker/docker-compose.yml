@@ -2,7 +2,7 @@ version: "3.1"
 services:
     identity:
         container_name: identity
-        image: identity:0.0.0.1
+        image: identity:0.0.0.2
         build:
             context: ./../
             dockerfile: Docker/${DOCKERFILE}
