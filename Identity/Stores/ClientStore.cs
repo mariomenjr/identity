@@ -23,6 +23,8 @@ namespace Identity.Stores
             var foundClient = await this._clientService.FindOneAsync(client => client.Name == clientId);
             if (foundClient != null)
             {
+                var relatedApiScopes = this._apiScopeService.FindApiScopesByIds(foundClient.ApiScopeIds);
+                
                 return new Client()
                 {
                     ClientId =  foundClient.Name,
@@ -38,7 +40,7 @@ namespace Identity.Stores
                     },
 
                     // scopes that client has access to
-                    AllowedScopes = this._apiScopeService.Find().Select(s => s.Name).ToList(), // TODO: Create FindScopesByClient
+                    AllowedScopes = relatedApiScopes.Select(s => s.Name).ToList(),
                 };
             }
             return null;
