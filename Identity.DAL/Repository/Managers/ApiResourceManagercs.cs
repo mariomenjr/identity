@@ -10,13 +10,31 @@ namespace Identity.DAL.Repository.Managers
 {
     public class ApiResourceManager : MongoRepository<ApiResource>, IApiResourceService
     {
-        public ApiResourceManager(IMongoSettings settings) : base(settings)
+        private readonly IApiScopeService _apiScopeService;
+
+        public ApiResourceManager(IMongoSettings settings, IApiScopeService apiScopeService) : base(settings)
         {
+            this._apiScopeService = apiScopeService;
         }
-        
-        public IEnumerable<ApiResource> FindApiResourcesByScopeName(IEnumerable<string> scopeNames)
+
+        public IEnumerable<ApiResource> FindApiResourcesByScopeNameWithApiScopes(IEnumerable<string> scopeNames)
         {
-            return this.AsQueryable(); // TODO: Relate both ApiScope and ApiResource entities
+            // As there might be significantly less ApiResources than ApiScopes
+            // All ApiResources are queried
+            var apiResources = this.AsQueryable().ToList();
+            var apiResourcesIds = apiResources.Select(s => s.Id);
+
+            // But only those ApiScopes in scopeNames are brought
+            var apiScopes = this._apiScopeService.FindApiScopesByNames(scopeNames);
+
+            // Deliver final product
+            return apiResources
+                .Select(apiResource =>
+                {
+                    apiResource.ApiScopes = apiScopes.Where(w => apiResourcesIds.Contains(w.Id)).ToList();
+                    return apiResource;
+                })
+                .Where(w => w.ApiScopes.Any());
         }
 
         public IEnumerable<ApiResource> FindApiResourcesByName(IEnumerable<string> apiResourceNames)

@@ -15,7 +15,7 @@ namespace Identity.DAL.Repository.Managers
         {
         }
 
-        public IEnumerable<ApiScope> FindApiScopesByName(IEnumerable<string> scopeNames)
+        public IEnumerable<ApiScope> FindApiScopesByNames(IEnumerable<string> scopeNames)
         {
             return this.AsQueryable().Where(aS => scopeNames.Contains(aS.Name));
         }

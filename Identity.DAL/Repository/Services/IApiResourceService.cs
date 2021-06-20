@@ -6,7 +6,7 @@ namespace Identity.DAL.Repository.Services
 {
     public interface IApiResourceService : IMongoRepository<ApiResource>
     {
-        IEnumerable<ApiResource> FindApiResourcesByScopeName(IEnumerable<string> scopeNames);
+        IEnumerable<ApiResource> FindApiResourcesByScopeNameWithApiScopes(IEnumerable<string> scopeNames);
         IEnumerable<ApiResource> FindApiResourcesByName(IEnumerable<string> apiResourceNames);
     }
 }

@@ -41,7 +41,7 @@ namespace Identity.Stores
 
         public async Task<IEnumerable<ApiScope>> FindApiScopesByNameAsync(IEnumerable<string> scopeNames)
         {
-            return await Task.Run(() => this._apiScopeService.FindApiScopesByName(scopeNames).Select(s =>
+            return await Task.Run(() => this._apiScopeService.FindApiScopesByNames(scopeNames).Select(s =>
                 new ApiScope()
                 {
                     Name = s.Name,
@@ -51,17 +51,16 @@ namespace Identity.Stores
 
         public async Task<IEnumerable<ApiResource>> FindApiResourcesByScopeNameAsync(IEnumerable<string> scopeNames)
         {
-            var apiScopes = this._apiScopeService.FindApiScopesByName(scopeNames).Select(s => s.Name); // TODO: Relate both ApiScope and ApiResource entities
-
-            return await Task.Run(() => this._apiResourceService.FindApiResourcesByScopeName(scopeNames).Select(s =>
-                new ApiResource()
-                {
-                    Name = s.Name,
-                    Scopes = apiScopes.ToList(),
-                    ApiSecrets = new List<Secret>
-                        {new(Environment.GetEnvironmentVariable("CONTINUEE__API_RESOURCE_SECRET").Sha256())},
-                    UserClaims = new List<string> {"role"}
-                }));
+            return await Task.Run(() => this._apiResourceService.FindApiResourcesByScopeNameWithApiScopes(scopeNames)
+                .Select(apiResource =>
+                    new ApiResource()
+                    {
+                        Name = apiResource.Name,
+                        Scopes = apiResource.ApiScopes.Select(s => s.Name).ToList(),
+                        ApiSecrets = new List<Secret>
+                            {new(Environment.GetEnvironmentVariable("CONTINUEE__API_RESOURCE_SECRET").Sha256())},
+                        UserClaims = new List<string> {"role"}
+                    }));
         }
 
         public async Task<IEnumerable<ApiResource>> FindApiResourcesByNameAsync(IEnumerable<string> apiResourceNames)
