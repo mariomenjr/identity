@@ -7,17 +7,22 @@ namespace Identity.Utils
 {
     public static class About
     {
-        public static string GetHtmlWelcomePage()
+        public const string ProjectUrl = "https://identity.mariomenjr.com/";
+
+        public static string GetHtmlWelcomePage(string hostName)
         {
             var body = string.Join(
                 "<br />",
                 new string[]
                 {
                     $"{DateTimeOffset.Now.ToString()}/{IdentityInfo.Configuration}",
-                    "<br />",
+                    string.Empty,
                     $"{IdentityInfo.Product}@v{IdentityInfo.InformationalVersion}",
                     $" {IdentityInfo.Description}",
                     $"<a href=\"{IdentityInfo.RepositoryUrl}\">{IdentityInfo.RepositoryUrl}</a>",
+                    string.Empty, 
+                    "Discovery document",
+                    $"<a href=\"{hostName}.well-known/openid-configuration\">{hostName}.well-known/openid-configuration</a>"
                 }
             );
             
