@@ -15,12 +15,10 @@ namespace Identity
 {
     public class Startup
     {
-        private FileVersionInfo About { get; }
         private IConfiguration Configuration { get; }
         
         public Startup(IConfiguration configuration)
         {
-            this.About = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location);
             this.Configuration = configuration;
         }
 
@@ -50,18 +48,9 @@ namespace Identity
             {
                 endpoints.MapGet("/", async context =>
                 {
-                    string repoUrl = "https://github.com/mariomenjr/identity"; // Environment.GetEnvironmentVariable("REPO_URL");
                     await context.Response.WriteAsync(
-                        "<html><body>" + 
-                        string.Join(
-                            "<br />",
-                            new string[]
-                            {
-                                $"{this.About.ProductName}/{this.About.FileVersion} @ {DateTimeOffset.Now.ToString()}",
-                                $"Repo: <a href=\"{repoUrl}\">{repoUrl}</a>",
-                            }
-                        ) + 
-                        "</body></html>"
+                        
+                        Utils.About.GetHtmlWelcomePage()
                     );
                 });
             });
