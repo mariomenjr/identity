@@ -6,6 +6,8 @@ Live at [identity.mariomenjr.com](https://identity.mariomenjr.com/)
 
 ## 1.1. Run
 
+Provide your `MongoSettings`. See [# 3.2. appsettings.json](#32-appsettingsjson).
+
 ### 1.1.1. Linux
 
 You can run this project on Linux through the JetBrains Rider IDE.
@@ -146,6 +148,8 @@ Feel free to use schemas below.
 ```
 
 ## 3.2. appsettings.json
+
+You need to provide the credentials to connect to your MongoDB database.
 
 Currently, the appsettings.json is being tracked by Git. Be careful when making changes to this file, you don't want your credentials to get into a public repository.
 
