@@ -2,8 +2,16 @@
 # Created by https://www.toptal.com/developers/gitignore/api/dotnetcore
 # Edit at https://www.toptal.com/developers/gitignore?templates=dotnetcore
 
+# Temporary
+
+Identity.API
+
+# IDEs
+
 .idea
 .vscode
+
+# Configs
 
 .env
 *.jwk
