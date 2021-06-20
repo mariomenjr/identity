@@ -36,7 +36,7 @@ namespace Identity.Stores
                     // secret for authentication
                     ClientSecrets =
                     {
-                        new Secret(Environment.GetEnvironmentVariable("CONTINUEE__CLIENT_SECRET").Sha256())
+                        new Secret(foundClient.Secret.Sha256())
                     },
 
                     // scopes that client has access to

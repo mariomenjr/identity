@@ -9,6 +9,7 @@ namespace Identity.Entities.Model
     public partial class Client : Document
     {
         public string Name { get; set; }
+        public string Secret { get; set; }
         public ICollection<ObjectId> ApiScopeIds { get; set; } 
     }
 }

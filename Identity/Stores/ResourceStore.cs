@@ -58,7 +58,9 @@ namespace Identity.Stores
                         Name = apiResource.Name,
                         Scopes = apiResource.ApiScopes.Select(s => s.Name).ToList(),
                         ApiSecrets = new List<Secret>
-                            {new(Environment.GetEnvironmentVariable("CONTINUEE__API_RESOURCE_SECRET").Sha256())}, // TODO: From apiResource
+                        {
+                            new(apiResource.Secret.Sha256())
+                        },
                         UserClaims = new List<string> {"role"} // TODO: From MongoDB
                     }));
         }
@@ -71,7 +73,9 @@ namespace Identity.Stores
                     Name = apiResource.Name,
                     Scopes = apiResource.ApiScopes.Select(s => s.Name).ToList(),
                     ApiSecrets = new List<Secret>
-                        {new(Environment.GetEnvironmentVariable("CONTINUEE__API_RESOURCE_SECRET").Sha256())}, // TODO: From apiResource
+                    {
+                        new(apiResource.Secret.Sha256())
+                    },
                     UserClaims = new List<string> {"role"} // TODO: From MongoDB
                 }));
         }
