@@ -121,7 +121,7 @@ Feel free to use schemas below.
 
 Currently, the appsettings.json is being tracked by Git. Be careful when making changes to this file, you don't want your credentials to get into a public repository.
 
-```json
+```json5
 // appsettings.json
 {
   "Logging": {
