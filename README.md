@@ -16,13 +16,21 @@ Additionally, you can use Docker:
 sh ./setup.sh development
 ```
 
+### 1.1.2 Windows & Mac
+
+Through Visual Studio or JetBrains Rider IDEs.
+
+## 1.2 Deploy
+
+### 1.2.1 Linux, Mac & Windows (Using Docker)
+
 ```bash
 sh ./setup.sh production
 ```
 
-### 1.1.2 Windows & Mac
+### 1.2.2 Windows
 
-Through Visual Studio or JetBrains Rider IDEs.
+Through Visual Studio IDE.
 
 # 2. Samples
 
