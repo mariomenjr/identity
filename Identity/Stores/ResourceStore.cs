@@ -58,23 +58,21 @@ namespace Identity.Stores
                         Name = apiResource.Name,
                         Scopes = apiResource.ApiScopes.Select(s => s.Name).ToList(),
                         ApiSecrets = new List<Secret>
-                            {new(Environment.GetEnvironmentVariable("CONTINUEE__API_RESOURCE_SECRET").Sha256())},
-                        UserClaims = new List<string> {"role"}
+                            {new(Environment.GetEnvironmentVariable("CONTINUEE__API_RESOURCE_SECRET").Sha256())}, // TODO: From apiResource
+                        UserClaims = new List<string> {"role"} // TODO: From MongoDB
                     }));
         }
 
         public async Task<IEnumerable<ApiResource>> FindApiResourcesByNameAsync(IEnumerable<string> apiResourceNames)
         {
-            var apiScopes = this._apiScopeService.Find().Select(s => s.Name); // TODO: Relate both ApiScope and ApiResource entities
-
-            return await Task.Run(() => this._apiResourceService.FindApiResourcesByName(apiResourceNames).Select(s =>
+            return await Task.Run(() => this._apiResourceService.FindApiResourcesByNameWithApiScopes(apiResourceNames).Select(apiResource =>
                 new ApiResource()
                 {
-                    Name = s.Name,
-                    Scopes = apiScopes.ToList(),
+                    Name = apiResource.Name,
+                    Scopes = apiResource.ApiScopes.Select(s => s.Name).ToList(),
                     ApiSecrets = new List<Secret>
-                        {new(Environment.GetEnvironmentVariable("CONTINUEE__API_RESOURCE_SECRET").Sha256())},
-                    UserClaims = new List<string> {"role"}
+                        {new(Environment.GetEnvironmentVariable("CONTINUEE__API_RESOURCE_SECRET").Sha256())}, // TODO: From apiResource
+                    UserClaims = new List<string> {"role"} // TODO: From MongoDB
                 }));
         }
 

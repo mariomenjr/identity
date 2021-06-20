@@ -27,7 +27,7 @@ namespace Identity.DAL.Repository.Managers
             // But only those ApiScopes in scopeNames are brought
             var apiScopes = this._apiScopeService.FindApiScopesByNames(scopeNames);
 
-            // Deliver final product
+            // Assign ApiScopes accordingly and deliver
             return apiResources
                 .Select(apiResource =>
                 {
@@ -37,9 +37,21 @@ namespace Identity.DAL.Repository.Managers
                 .Where(w => w.ApiScopes.Any());
         }
 
-        public IEnumerable<ApiResource> FindApiResourcesByName(IEnumerable<string> apiResourceNames)
+        public IEnumerable<ApiResource> FindApiResourcesByNameWithApiScopes(IEnumerable<string> apiResourceNames)
         {
-            return this.AsQueryable().Where(aR => apiResourceNames.Contains(aR.Name));
+            var apiResources = this.AsQueryable().Where(aR => apiResourceNames.Contains(aR.Name)).ToList();
+            var apiResourcesIds = apiResources.Select(s => s.Id);
+            
+            var apiScopesIds = apiResources.Select(s => s.ApiScopeIds).SelectMany(s => s);
+            var apiScopes = this._apiScopeService.FindApiScopesByIds(apiScopesIds);
+            
+            return apiResources
+                .Select(apiResource =>
+                {
+                    apiResource.ApiScopes = apiScopes.Where(w => apiResourcesIds.Contains(w.Id)).ToList();
+                    return apiResource;
+                })
+                .Where(w => w.ApiScopes.Any());
         }
     }
 }
