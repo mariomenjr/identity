@@ -20,6 +20,6 @@ RUN dotnet publish -c release -o /app
 # final stage/image
 FROM mcr.microsoft.com/dotnet/aspnet:5.0
 WORKDIR /app
-COPY Identity/.env .
+# COPY Identity/.env .
 COPY --from=build /app ./
 ENTRYPOINT ["dotnet", "Identity.dll"]

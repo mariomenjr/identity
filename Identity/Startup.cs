@@ -50,7 +50,7 @@ namespace Identity
             {
                 endpoints.MapGet("/", async context =>
                 {
-                    string repoUrl = Environment.GetEnvironmentVariable("REPO_URL");
+                    string repoUrl = "https://github.com/mariomenjr/identity"; // Environment.GetEnvironmentVariable("REPO_URL");
                     await context.Response.WriteAsync(
                         "<html><body>" + 
                         string.Join(

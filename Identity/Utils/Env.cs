@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Identity.Utils
 {
-    public static class Env
+    public static class Env // TODO: Delete once secrets.json has been implemented
     {
         public static void LoadVariables(string filePath = "../.env")
         {
