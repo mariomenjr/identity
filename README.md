@@ -4,6 +4,26 @@ Identity Server 4 using MongoDB for Stores.
 
 Live at [identity.mariomenjr.com](https://identity.mariomenjr.com/)
 
+## 1.1 Run
+
+### 1.1.1 Linux
+
+You can run this project on Linux through the JetBrains Rider IDE.
+
+Additionally, you can use Docker:
+
+```bash
+sh ./setup.sh development
+```
+
+```bash
+sh ./setup.sh production
+```
+
+### 1.1.2 Windows & Mac
+
+Through Visual Studio or JetBrains Rider IDEs.
+
 # 2. Samples
 
 By Grant types.
@@ -145,6 +165,6 @@ Currently, the appsettings.json is being tracked by Git. Be careful when making 
 # 4. TODOs
 
 - Externalize IdentityResources
-- Implement secrets.json with Docker (Ref: https://blog.matjanowski.pl/2017/11/18/managing-options-and-secrets-in-net-core-and-docker/)
+- Implement secrets.json with Docker for MongoSettings (Ref: https://blog.matjanowski.pl/2017/11/18/managing-options-and-secrets-in-net-core-and-docker/)
 
 > Version 0.0.0.2
