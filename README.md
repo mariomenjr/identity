@@ -4,9 +4,9 @@ Identity Server 4 using MongoDB for Stores.
 
 Live at [identity.mariomenjr.com](https://identity.mariomenjr.com/)
 
-## 1.1 Run
+## 1.1. Run
 
-### 1.1.1 Linux
+### 1.1.1. Linux
 
 You can run this project on Linux through the JetBrains Rider IDE.
 
@@ -16,19 +16,19 @@ Additionally, you can use Docker:
 sh ./setup.sh development
 ```
 
-### 1.1.2 Windows & Mac
+### 1.1.2. Windows & Mac
 
 Through Visual Studio or JetBrains Rider IDEs.
 
-## 1.2 Deploy
+## 1.2. Deploy
 
-### 1.2.1 Linux, Mac & Windows (Using Docker)
+### 1.2.1. Linux, Mac & Windows (Using Docker)
 
 ```bash
 sh ./setup.sh production
 ```
 
-### 1.2.2 Windows
+### 1.2.2. Windows
 
 Through Visual Studio IDE.
 
@@ -36,13 +36,13 @@ Through Visual Studio IDE.
 
 By Grant types.
 
-## 2.1 client_credentials
+## 2.1. client_credentials
 
-### 2.1.1 Request
+### 2.1.1. Request
 
 By some implementations.
 
-#### 2.1.1.1 HTTP
+#### 2.1.1.1. HTTP
 
 ```http
 POST /connect/token HTTP/1.1
@@ -53,7 +53,7 @@ Content-Length: 94
 client_id=test.client&client_secret=test.secret&scope=test.scope&grant_type=client_credentials
 ```
 
-#### 2.1.1.2 cURL
+#### 2.1.1.2. cURL
 
 ```bash
 curl --location --request POST 'https://identity.mariomenjr.com:443/connect/token' \
@@ -64,7 +64,7 @@ curl --location --request POST 'https://identity.mariomenjr.com:443/connect/toke
 --data-urlencode 'grant_type=client_credentials'
 ```
 
-#### 2.1.1.3 JavaScript - Fetch
+#### 2.1.1.3. JavaScript - Fetch
 
 ```javascript
 var myHeaders = new Headers();
@@ -89,7 +89,7 @@ fetch("https://identity.mariomenjr.com:443/connect/token", requestOptions)
   .catch((error) => console.log("error", error));
 ```
 
-### 2.1.2 Response
+### 2.1.2. Response
 
 ```json
 {
@@ -104,7 +104,7 @@ fetch("https://identity.mariomenjr.com:443/connect/token", requestOptions)
 
 This implementation uses MongoDB to store Client & Resource data. As of now, the database has to be manually created.
 
-## 3.1 Collection schemas
+## 3.1. Collection schemas
 
 Feel free to use schemas below.
 
@@ -145,7 +145,7 @@ Feel free to use schemas below.
 // Pending implementation
 ```
 
-## 3.2 appsettings.json
+## 3.2. appsettings.json
 
 Currently, the appsettings.json is being tracked by Git. Be careful when making changes to this file, you don't want your credentials to get into a public repository.
 
