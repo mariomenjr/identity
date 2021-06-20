@@ -5,10 +5,14 @@ WORKDIR /source
 # copy csproj and restore as distinct layers
 COPY *.sln .
 COPY Identity/*.csproj ./Identity/
+COPY Identity.DAL/*.csproj ./Identity.DAL/
+COPY Identity.Entities/*.csproj ./Identity.Entities/
 RUN dotnet restore
 
 # copy everything else and build app
 COPY Identity/. ./Identity/
+COPY Identity.DAL/. ./Identity.DAL/
+COPY Identity.Entities/. ./Identity.Entities/
 WORKDIR /source/Identity
 
 RUN dotnet publish -c release -o /app
@@ -16,5 +20,6 @@ RUN dotnet publish -c release -o /app
 # final stage/image
 FROM mcr.microsoft.com/dotnet/aspnet:5.0
 WORKDIR /app
+COPY Identity/.env .
 COPY --from=build /app ./
 ENTRYPOINT ["dotnet", "Identity.dll"]

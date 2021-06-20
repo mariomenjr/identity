@@ -25,7 +25,7 @@ else
         COMPOSE=true
     fi
 
-    if [ -f .env ]
+    if [ -f Identity/.env ]
     then
         echo "Preparing docker-compose file..."
 
