@@ -2,14 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <AssemblyVersion>0.1.1.1</AssemblyVersion>
+    <AssemblyVersion>0.1.1.2</AssemblyVersion>
     <NeutralLanguage>en-US</NeutralLanguage>
     <Authors>Mario Menjivar</Authors>
     <Description>Identity Server 4 using MongoDB for Stores.</Description>
     <PackageProjectUrl>https://identity.mariomenjr.com/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/mariomenjr/identity</RepositoryUrl>
     <IsPackable>true</IsPackable>
-    <Version>0.1.1-alpha.1</Version>
+    <Version>0.1.1-alpha.2</Version>
   </PropertyGroup>
 
   <ItemGroup>

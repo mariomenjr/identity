@@ -22,7 +22,7 @@ namespace Identity.DAL.Repository.Managers
             // As there might be significantly less ApiResources than ApiScopes
             // All ApiResources are queried
             var apiResources = this.AsQueryable().ToList();
-            var apiResourcesIds = apiResources.Select(s => s.Id);
+            var apiResourcesScopesIds = apiResources.SelectMany(s => s.ApiScopeIds);
 
             // But only those ApiScopes in scopeNames are brought
             var apiScopes = this._apiScopeService.FindApiScopesByNames(scopeNames);
@@ -31,7 +31,7 @@ namespace Identity.DAL.Repository.Managers
             return apiResources
                 .Select(apiResource =>
                 {
-                    apiResource.ApiScopes = apiScopes.Where(w => apiResourcesIds.Contains(w.Id)).ToList();
+                    apiResource.ApiScopes = apiScopes.Where(w => apiResourcesScopesIds.Contains(w.Id)).ToList();
                     return apiResource;
                 })
                 .Where(w => w.ApiScopes.Any());
@@ -40,7 +40,7 @@ namespace Identity.DAL.Repository.Managers
         public IEnumerable<ApiResource> FindApiResourcesByNameWithApiScopes(IEnumerable<string> apiResourceNames)
         {
             var apiResources = this.AsQueryable().Where(aR => apiResourceNames.Contains(aR.Name)).ToList();
-            var apiResourcesIds = apiResources.Select(s => s.Id);
+            var apiResourcesScopesIds = apiResources.SelectMany(s => s.ApiScopeIds);
             
             var apiScopesIds = apiResources.Select(s => s.ApiScopeIds).SelectMany(s => s);
             var apiScopes = this._apiScopeService.FindApiScopesByIds(apiScopesIds);
@@ -48,7 +48,7 @@ namespace Identity.DAL.Repository.Managers
             return apiResources
                 .Select(apiResource =>
                 {
-                    apiResource.ApiScopes = apiScopes.Where(w => apiResourcesIds.Contains(w.Id)).ToList();
+                    apiResource.ApiScopes = apiScopes.Where(w => apiResourcesScopesIds.Contains(w.Id)).ToList();
                     return apiResource;
                 })
                 .Where(w => w.ApiScopes.Any());
