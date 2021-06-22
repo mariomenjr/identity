@@ -14,6 +14,12 @@ namespace Identity.Stores
         private readonly IApiScopeService _apiScopeService;
         private readonly IApiResourceService _apiResourceService;
 
+        private readonly IdentityResource[] _defaultIdentityResources = new IdentityResource[]
+        {
+            new IdentityResources.OpenId(),
+            new IdentityResources.Profile()
+        };
+        
         public ResourceStore(IIdentityResourceService identityResourceService, IApiScopeService apiScopeService,
             IApiResourceService apiResourceService)
         {
@@ -31,12 +37,7 @@ namespace Identity.Stores
                 .Select(iR => new IdentityResource {Name = iR.Name});
 
             // Hardcoded
-            return await Task.Run(() => new IdentityResource[]
-                {
-                    new IdentityResources.OpenId(),
-                    new IdentityResources.Profile()
-                }
-                .Union(foundIdentityResources));
+            return await Task.Run(() => this._defaultIdentityResources.Union(foundIdentityResources));
         }
 
         public async Task<IEnumerable<ApiScope>> FindApiScopesByNameAsync(IEnumerable<string> scopeNames)
@@ -84,16 +85,11 @@ namespace Identity.Stores
         {
             return await Task.Run(() => new Resources()
             {
-                ApiScopes = this._apiScopeService.Find().Select(s => new ApiScope()
-                {
-                    Name = s.Name,
-                    DisplayName = s.DisplayName
-                }).ToList(),
-
-                IdentityResources = this._identityResourceService.Find().Select(s => new IdentityResource()
-                {
-                    Name = s.Name
-                }).ToList()
+                ApiScopes = this._apiScopeService.Find().Select(s => new ApiScope() {Name = s.Name}).ToList(),
+                ApiResources = this._apiResourceService.Find().Select(s => new ApiResource {Name = s.Name}).ToList(),
+                IdentityResources = this._defaultIdentityResources
+                    .Union(this._identityResourceService.Find().Select(s => new IdentityResource() {Name = s.Name}))
+                    .ToList()
             });
         }
     }
