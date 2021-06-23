@@ -15,17 +15,25 @@ namespace Identity
     public class Startup
     {
         private IConfiguration Configuration { get; }
+        private IWebHostEnvironment Environment { get; }
         
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             this.Configuration = configuration;
+            this.Environment = environment;
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMongoDb(Configuration.GetSection("MongoSettings"));
             
-            var builder = services.AddIdentityServer();
+            var builder = services.AddIdentityServer(options =>
+            {
+                if (this.Environment.IsProduction())
+                {
+                    options.IssuerUri = About.ProjectUrl;
+                }
+            });
 
             builder.AddDeveloperSigningCredential();
             
