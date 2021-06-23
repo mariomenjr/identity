@@ -31,7 +31,7 @@ namespace Identity
             {
                 if (!this.Environment.IsDevelopment())
                 {
-                    options.IssuerUri = About.ProjectUrl;
+                    options.IssuerUri = About.ProjectUrl.Trim('/');
                     options.MutualTls.Enabled = true;
                 }
             });
