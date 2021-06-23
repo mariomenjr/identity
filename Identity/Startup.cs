@@ -32,6 +32,7 @@ namespace Identity
                 if (this.Environment.IsProduction())
                 {
                     options.IssuerUri = About.ProjectUrl;
+                    options.MutualTls.Enabled = true;
                 }
             });
 
