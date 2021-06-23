@@ -7,7 +7,7 @@ namespace Identity.Utils
 {
     public static class AboutUtils
     {
-        public const string ProjectUrl = "https://identity.mariomenjr.com/";
+        public const string ProjectUrl = "https://identity.mariomenjr.com/"; // TODO: Must be stored on DB
 
         public static string GetHtmlWelcomePage(string hostName)
         {
