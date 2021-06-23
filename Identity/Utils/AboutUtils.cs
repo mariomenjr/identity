@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace Identity.Utils
 {
-    public static class About
+    public static class AboutUtils
     {
         public const string ProjectUrl = "https://identity.mariomenjr.com/";
 

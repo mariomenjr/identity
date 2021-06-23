@@ -31,7 +31,7 @@ namespace Identity
             {
                 if (!this.Environment.IsDevelopment())
                 {
-                    options.IssuerUri = About.ProjectUrl.Trim('/');
+                    options.IssuerUri = AboutUtils.ProjectUrl.Trim('/');
                     options.MutualTls.Enabled = true;
                 }
             });
@@ -57,10 +57,10 @@ namespace Identity
                 endpoints.MapGet("/", async context =>
                 {
                     await context.Response.WriteAsync(
-                        Utils.About.GetHtmlWelcomePage(
+                        Utils.AboutUtils.GetHtmlWelcomePage(
                             env.IsDevelopment()
                                 ? context.Request.GetEncodedUrl()
-                                : About.ProjectUrl
+                                : AboutUtils.ProjectUrl
                         )
                     );
                 });
