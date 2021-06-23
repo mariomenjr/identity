@@ -29,7 +29,7 @@ namespace Identity
             
             var builder = services.AddIdentityServer(options =>
             {
-                if (this.Environment.IsProduction())
+                if (!this.Environment.IsDevelopment())
                 {
                     options.IssuerUri = About.ProjectUrl;
                     options.MutualTls.Enabled = true;
