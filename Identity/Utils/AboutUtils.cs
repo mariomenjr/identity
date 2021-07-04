@@ -26,7 +26,7 @@ namespace Identity.Utils
                 }
             );
             
-            return $"<html><body>{body}</body></html>";
+            return $"<html><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><body>{body}</body></html>";
         }
         
         private static class IdentityInfo
