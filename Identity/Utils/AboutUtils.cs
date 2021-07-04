@@ -5,9 +5,9 @@ using System.Reflection;
 
 namespace Identity.Utils
 {
-    public static class About
+    public static class AboutUtils
     {
-        public const string ProjectUrl = "https://identity.mariomenjr.com/";
+        public const string ProjectUrl = "https://identity.mariomenjr.com/"; // TODO: Must be stored on DB
 
         public static string GetHtmlWelcomePage(string hostName)
         {
@@ -26,7 +26,7 @@ namespace Identity.Utils
                 }
             );
             
-            return $"<html><body>{body}</body></html>";
+            return $"<html><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><body>{body}</body></html>";
         }
         
         private static class IdentityInfo
